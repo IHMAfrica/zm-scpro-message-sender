@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: zm-scpro-message-sender
+
+  r2dbc:
+    url: r2dbc:mssql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    properties:
+      sslEnabled: false
+
+grpc:
+  clients:
+    disa:
+      host: ${DISA_GRPC_HOST}
+      port: ${DISA_GRPC_PORT}
+    elmis:
+      host: ${ELMIS_GRPC_HOST}
+      port: ${ELMIS_GRPC_PORT}

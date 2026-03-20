@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package zm.gov.moh.messaging;
+
+option java_package = "zm.gov.moh.zmscpromessagesender.grpc";
+option java_outer_classname = "MessageServiceProto";
+option java_multiple_files = true;
+
+service MessageService {
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
+}
+
+message SendMessageRequest {
+  string correlation_id = 1;
+  string payload = 2;
+  string targetSystem = 3;
+  string message_type = 4;
+}
+
+message SendMessageResponse {
+  bool acknowledged = 1;
+  string status = 2;
+  string error_message = 3;
+}
