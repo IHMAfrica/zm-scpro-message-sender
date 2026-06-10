@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: gchr.io/ihmafrica/zm-scpro-message-sender
   pullPolicy: IfNotPresent
-  tag: ""
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""

@@ -62,26 +62,11 @@ jobs:
             latest
 
       - name: Build and push Docker image
-        run: |
-          docker build -t ghcr.io/ihmafrica/zm-scpro-message-sender:${{ github.sha }} .
-          docker push ghcr.io/ihmafrica/zm-scpro-message-sender:${{ github.sha }}
-
-      - name: Update Helm Tag (GitOps)
-        run: |
-          sed -i "s/tag: .*/tag: ${{ github.sha }}/" zm-scpro-message-sender-chart/values.yaml
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add zm-scpro-message-sender-chart/values.yaml
-          git commit -m "deploy: update image tag to ${{ github.sha }}"
-          git push
-
-      - name: Configure git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Push changes
-        env:
-          REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
-        run: |
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
